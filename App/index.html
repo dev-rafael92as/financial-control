@@ -46,7 +46,7 @@
         <p>R$3.000,00</p>
       </div>
     </section>
-    <section id="transation">
+    <section id="transaction">
       <h2 class="sr-only">Transações</h2>
       <a href="" class="button new">+ Nova Transação</a>
       <table id="data-table">
@@ -81,6 +81,34 @@
       </table>
     </section>
   </main>
+  <div class="modal-overlay active">
+    <div class="modal">
+      <div id="form">
+        <h2>Nova Transação</h2>
+        <form action="">
+          <div class="input-group">
+            <label class="sr-only" for="description">Descrição</label>
+            <input type="text" id="description" name="description" placeholder="Descrição">
+          </div>
+
+          <div class="input-group">
+            <label class="sr-only" for="amount">Descrição</label>
+            <input type="number" step="0.01" id="amount" name="amount" placeholder="0,00">
+            <small class="help">Use o sinal - (negativo) para despesas e, (vírgula) para cadas decimais</small>
+
+            <div class="input-group">
+              <label class="sr-only" for="date">Descrição</label>
+              <input type="date" id="date" name="date">
+            </div>
+            <div class="input-group actions">
+              <a href="#" class="button cancel">Cancelar</a>
+              <button>Salvar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <footer>
     dev.fincance$
   </footer>
