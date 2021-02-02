@@ -9,9 +9,25 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 93.75%;
+}
+
 body {
   background: #f0f2f5;
   font-family: 'Poppins', sans-serif;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .container {
@@ -24,6 +40,22 @@ h2 {
   margin-bottom: 0.8rem;
   color: var(--dark-blue);
   font-weight: normal;
+}
+
+/* Links & Buttons ========================== */
+
+a {
+  text-decoration: none;
+  color: #49aa26;
+}
+
+a:hover {
+  color: #3dd705;
+}
+
+.button.new {
+  display: inline-block;
+  margin-bottom: .8rem;
 }
 
 /* Header ========================== */
@@ -59,6 +91,10 @@ header {
   font-weight: normal;
   font-size: 1rem;
   padding-bottom: 0.8rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .card p {
@@ -71,8 +107,12 @@ header {
 }
 /* Table ========================== */
 #data-table {
+  display: block;
   width: 100%;
   border-spacing: 0 0.5rem;
+  color: #969cb3;
+
+  overflow-x: auto;
 }
 table th {
   background: #fff;
@@ -113,10 +153,27 @@ table tbody tr td:first-child {
   border-radius: 0.25rem 0 0 0.25rem;
 }
 
+table thead tr th:last-child,
+table tbody tr td:last-child {
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
 /* Footer ========================== */
 footer {
   text-align: center;
   padding: 4rem 0 2rem;
   color: var(--dark-blue);
   opacity: 0.6;
+}
+
+/* Responsive ========================== */
+@media (min-width: 800px) {
+  html {
+    font-size: 87.5%; /* É o mesmo que 87.50 está para ? assim como 100% está para 16px => (87.50*16)/100 = 14px */
+  }
+  #balance {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
 }
