@@ -16,42 +16,49 @@ const Modal = {
           .classList
           .remove('active')
   }
-}
-
-const transactions = [
-  {
-    id: 1,
-    description: 'Luz',
-    amount: -10000,
-    date: '25/01/2021'
-  },
-  {
-    id: 2,
-    description: 'Website',
-    amount: 500000,
-    date: '25/01/2021'
-  },
-  {
-    id: 3,
-    description: 'Internet',
-    amount: -20000,
-    date: '25/01/2021'
-  },
-  {
-    id: 4,
-    description: 'Água',
-    amount: + 20000,
-    date: '25/01/2021'
-  }
-]
+} 
 
 const Transaction = {
+  all: [
+    {
+      description: 'Luz',
+      amount: -10000,
+      date: '25/01/2021'
+    },
+    {
+      description: 'Website',
+      amount: 500000,
+      date: '25/01/2021'
+    },
+    {
+      description: 'Internet',
+      amount: -20000,
+      date: '25/01/2021'
+    },
+    {
+      description: 'Água',
+      amount: + 20000,
+      date: '25/01/2021'
+    }
+  ],
+
+  add(transaction){
+    Transaction.all.push(transaction)
+
+    App.reload()
+  },
+
+  remove(index) {
+    Transaction.all.splice(index, 1)
+
+    App.reload()
+  },
+
   incomes() { 
-    
     let income = 0;
     //pegar todas as transações
     //para cada transação
-      transactions.forEach(transaction => {
+      Transaction.all.forEach(transaction => {
       //se ela for maior que zero
       if( transaction.amount > 0) {
         //somar a uma variavel e retornar a variavel
@@ -60,12 +67,12 @@ const Transaction = {
     })
     return income
   },
-  expenses() {
 
+  expenses() {
     let expense = 0;
     //pegar todas as transações
     //para cada transação
-      transactions.forEach(transaction => {
+    Transaction.all.forEach(transaction => {
       //se ela for menor que zero
       if( transaction.amount < 0) {
         //somar a uma variavel e retornar a variavel
@@ -74,6 +81,7 @@ const Transaction = {
     })
     return expense;
   },
+
   total() {
     return Transaction.incomes() + Transaction.expenses();
   }
@@ -89,6 +97,7 @@ const DOM = {
     
     DOM.transactionsContainer.appendChild(tr)
   },
+
   innerHTMLTransaction(transaction) {
     const CSSclass = transaction.amount > 0 ? "income" : "expense"
 
@@ -101,6 +110,7 @@ const DOM = {
             <td><img src="../assets/minus.svg" alt="Remover Transação"></td>`
     return html
   },
+
   updateBalance() {
     document
       .getElementById('incomeDisplay')
@@ -112,6 +122,10 @@ const DOM = {
       .getElementById('totalDisplay')
       .innerHTML = Utils.formatCurrency(Transaction.total())
     
+  },
+
+  clearTransactions() {
+    DOM.transactionsContainer.innerHTML = ""
   }
 }
 
@@ -130,8 +144,60 @@ const Utils = {
   }
 }
 
-transactions.forEach(function(transaction) {
-DOM.addTransaction(transaction)
-})
+const Form = {
+  description: document.querySelector('input#description'),
+  amount: document.querySelector('input#amount'),
+  date: document.querySelector('input#date'),
 
-DOM.updateBalance()
+  getValues() {
+    return {
+      description: Form.description.value,
+      amount: Form.amount.value,
+      date: Form.date.value
+    }
+  },
+
+  validateFields() {
+    const { description, amount, date } = Form.getValues()
+
+    if (description.trim() === "" || 
+      amount.trim() === "" ||
+      date.trim() === "") {
+        throw new Error("Por favor, preencha todos os campos")
+      }
+  },
+
+  submit(event) {
+    event.preventDefault()
+
+    try {
+      Form.validateFields()
+    // verificar se todas as informações foram preenchidas
+    // formatar os dados para salvar
+    // salvar
+    // apagar os cados do formulário
+    // modal fechar
+    // Atualizar a aplicação
+    } catch (error) {
+      alert(error.message)
+    }
+    
+  }
+}
+
+const App = {
+  init() {
+    Transaction.all.forEach(transaction => {
+      DOM.addTransaction(transaction)
+    })
+    DOM.updateBalance()
+  },
+
+  reload() {
+    DOM.clearTransactions()
+    App.init()
+  },
+}
+
+App.init()
+
