@@ -28,7 +28,7 @@ const Storage = {
 }
 
 const Transaction = {
-  all:Storage.get(),
+  all: Storage.get(),
 
   add(transaction){
     Transaction.all.push(transaction)
@@ -204,7 +204,9 @@ const Form = {
 
 const App = {
   init() {
-    Transaction.all.forEach(DOM.addTransaction)
+    Transaction.all.forEach((transaction, index) => {
+      DOM.addTransaction(transaction, index)
+    }),
 
     DOM.updateBalance()
 
